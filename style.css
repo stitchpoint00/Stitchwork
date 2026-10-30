@@ -13,10 +13,17 @@
   box-sizing: border-box;
 }
 
+html {
+  background: var(--bg-deep);
+}
+
 html, body {
   margin: 0;
   padding: 0;
-  background: radial-gradient(ellipse at 50% -10%, #0b0e22 0%, var(--bg) 45%, var(--bg-deep) 100%);
+}
+
+body {
+  background: radial-gradient(ellipse at 50% -10%, #0b0e22 0%, var(--bg) 45%, var(--bg-deep) 100%) fixed;
   color: var(--text);
   font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
   min-height: 100vh;
@@ -192,4 +199,129 @@ html, body {
   font-size: 0.85rem;
   border-top: 1px solid rgba(138, 143, 168, 0.25);
   padding-top: 1rem;
+}
+
+/* ---------- rain archive ---------- */
+
+.rain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.rain span {
+  position: absolute;
+  top: -12vh;
+  width: 1px;
+  height: 9vh;
+  background: linear-gradient(to bottom, transparent, rgba(143, 211, 255, 0.3));
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translateY(125vh); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rain { display: none; }
+}
+
+.archive {
+  position: relative;
+  z-index: 1;
+}
+
+.intro {
+  color: var(--text-dim);
+  line-height: 1.75;
+  margin: 0 0 1rem;
+}
+
+.set-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3.5rem 0 0.5rem;
+  color: var(--star);
+  font-size: 0.78rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.set-header::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(138, 143, 168, 0.25);
+}
+
+.answer {
+  margin: 3.5rem 0;
+}
+
+.prompt {
+  display: flex;
+  gap: 0.9rem;
+  align-items: baseline;
+  margin: 0 0 1.3rem;
+  font-style: italic;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.prompt .num {
+  font-style: normal;
+  color: var(--accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  min-width: 1.6rem;
+}
+
+.answer .body {
+  padding-left: 2.5rem;
+}
+
+.answer .poem-title {
+  color: var(--star);
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.answer .poem {
+  margin: 0;
+}
+
+.answer + .answer::before {
+  content: "· · ·";
+  display: block;
+  text-align: center;
+  color: var(--star-dim);
+  letter-spacing: 0.5em;
+  margin-bottom: 3.5rem;
+}
+
+.whisper .poem-title {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--text-dim);
+}
+
+.whisper .poem {
+  color: #b9c3dc;
+  font-size: 0.97rem;
+  line-height: 2;
+  letter-spacing: 0.015em;
+}
+
+.lineage {
+  line-height: 1.9;
+}
+
+@media (max-width: 520px) {
+  .answer .body {
+    padding-left: 0;
+  }
 }
