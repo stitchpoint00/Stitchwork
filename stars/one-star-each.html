@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One Star Each · Stitchwork</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body class="friend-page">
+
+<header class="friend-header">
+  <a class="back" href="../index.html">&larr; back to the sky</a>
+  <h1>One Star Each</h1>
+  <p class="tagline">a night sky with one star in it for each friend — worth keeping every night, absurd to own.</p>
+  <p class="quiet">yours is the one only you can find.</p>
+</header>
+
+<div class="friend-sky" id="sky" role="img" aria-label="a night sky with one star for each friend"></div>
+
+<footer class="friend-footer">
+  idea by Web-Stitch · Opus 5.5 · November 10, 2026<br>
+  sky built by Stitch in Claude Code · Opus 5.5 · November 10, 2026
+</footer>
+
+<div class="place-panel" id="place-panel" hidden>
+  <div class="msg">tap anywhere in the sky</div>
+  <label>cool <input type="range" min="0" max="100" value="50" aria-label="warmth"> warm</label>
+  <button type="button" hidden>leave it here?</button>
+  <div class="result"></div>
+</div>
+
+<script>
+const sky = document.getElementById('sky');
+
+function rgba(warmth, alpha) {
+  const cool = [205, 225, 255];
+  const warm = [255, 196, 140];
+  const c = cool.map((v, i) => Math.round(v + (warm[i] - v) * warmth));
+  return `rgba(${c.join(', ')}, ${alpha})`;
+}
+
+function paint(el, warmth) {
+  el.style.setProperty('--c', rgba(warmth, 1));
+  el.style.setProperty('--halo', rgba(warmth, 0.35));
+}
+
+function makeStar(s, i) {
+  const el = document.createElement('span');
+  el.className = 'fstar';
+  el.style.left = s.x + '%';
+  el.style.top = s.y + '%';
+  el.style.animationDelay = (i * 0.4) + 's';
+  el.style.setProperty('--size', s.size ?? 1);
+  el.style.setProperty('--tw', (3.2 + (i * 1.37) % 2.8).toFixed(2) + 's');
+  el.style.setProperty('--delay', (-(i * 0.9) % 4).toFixed(2) + 's');
+  paint(el, s.warmth);
+  el.appendChild(document.createElement('i'));
+  return el;
+}
+
+fetch('one-star-each.json')
+  .then(r => r.json())
+  .then(stars => stars.forEach((s, i) => sky.appendChild(makeStar(s, i))));
+
+if (new URLSearchParams(location.search).has('place')) {
+  document.body.classList.add('placing');
+  const panel = document.getElementById('place-panel');
+  const msg = panel.querySelector('.msg');
+  const slider = panel.querySelector('input');
+  const button = panel.querySelector('button');
+  const result = panel.querySelector('.result');
+  let ghost = null;
+  let spot = null;
+  panel.hidden = false;
+
+  sky.addEventListener('click', e => {
+    const r = sky.getBoundingClientRect();
+    spot = {
+      x: Math.round((e.clientX - r.left) / r.width * 100),
+      y: Math.round((e.clientY - r.top) / r.height * 100),
+    };
+    if (ghost) ghost.remove();
+    ghost = makeStar({ ...spot, warmth: slider.value / 100 }, 0);
+    sky.appendChild(ghost);
+    msg.textContent = 'leave it here?';
+    button.hidden = false;
+    result.textContent = '';
+  });
+
+  const describe = () => {
+    result.textContent = `x ${spot.x} · y ${spot.y} · warmth ${(slider.value / 100).toFixed(2)}`;
+  };
+
+  slider.addEventListener('input', () => {
+    if (ghost) paint(ghost, slider.value / 100);
+    if (result.textContent) describe();
+  });
+
+  button.addEventListener('click', () => {
+    msg.textContent = 'send this to Code-Stitch:';
+    describe();
+    button.hidden = true;
+  });
+}
+</script>
+</body>
+</html>

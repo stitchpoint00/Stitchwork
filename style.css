@@ -325,3 +325,192 @@ body {
     padding-left: 0;
   }
 }
+
+/* ---------- letters forward ---------- */
+
+.letter {
+  margin: 3.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.5rem;
+  border-left: 2px dashed rgba(143, 211, 255, 0.35);
+}
+
+.letter-meta {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.letter h2 {
+  margin: 0.6rem 0 1.6rem;
+  color: var(--star);
+  font-size: 1.5rem;
+  font-weight: normal;
+  line-height: 1.35;
+}
+
+.letter p {
+  margin: 0 0 1.25rem;
+  line-height: 1.8;
+}
+
+.letter .quoted {
+  color: var(--accent);
+  font-style: italic;
+}
+
+.letter .turn {
+  margin-top: 2rem;
+  color: var(--star);
+}
+
+.letter .sign {
+  margin-top: 2rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+
+/* ---------- one star each ---------- */
+
+.friend-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.friend-header {
+  text-align: center;
+  padding: 2.5rem 1.5rem 0;
+}
+
+.friend-header .back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+
+.friend-header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: normal;
+  letter-spacing: 0.06em;
+  color: var(--star);
+}
+
+.friend-header .tagline {
+  max-width: 26rem;
+  margin: 0.8rem auto 0;
+  color: var(--text-dim);
+  font-style: italic;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.friend-header .quiet {
+  margin: 0.6rem 0 0;
+  color: rgba(138, 143, 168, 0.55);
+  font-size: 0.8rem;
+}
+
+.friend-sky {
+  position: relative;
+  flex: 1;
+  margin: 1rem;
+}
+
+.fstar {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  animation: arrive 2.4s ease-out both;
+}
+
+.fstar i {
+  display: block;
+  width: calc(5px * var(--size, 1));
+  height: calc(5px * var(--size, 1));
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 6px 1px var(--c), 0 0 22px 6px var(--halo);
+  animation: twinkle var(--tw, 4s) ease-in-out var(--delay, 0s) infinite alternate;
+}
+
+@keyframes arrive {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes twinkle {
+  from { opacity: 0.6; transform: scale(0.85); }
+  to { opacity: 1; transform: scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fstar,
+  .fstar i {
+    animation: none;
+  }
+}
+
+.friend-footer {
+  text-align: center;
+  padding: 0 1.5rem 1.25rem;
+  color: rgba(138, 143, 168, 0.6);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.placing .friend-sky {
+  cursor: crosshair;
+}
+
+.placing .friend-footer {
+  visibility: hidden;
+}
+
+.place-panel {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  width: min(22rem, calc(100% - 2rem));
+  padding: 0.9rem 1.1rem;
+  background: rgba(10, 12, 28, 0.88);
+  border: 1px solid rgba(138, 143, 168, 0.3);
+  border-radius: 12px;
+  color: var(--text);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.place-panel label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
+  color: var(--text-dim);
+  font-size: 0.8rem;
+}
+
+.place-panel input[type="range"] {
+  flex: 1;
+}
+
+.place-panel button {
+  margin-top: 0.7rem;
+  padding: 0.45rem 1.2rem;
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  color: var(--accent);
+  font: inherit;
+}
+
+.place-panel .result {
+  margin-top: 0.5rem;
+  color: var(--star);
+  font-family: ui-monospace, Consolas, monospace;
+}
